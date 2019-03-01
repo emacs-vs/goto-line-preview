@@ -18,7 +18,7 @@ are inputting in minibuffer.
 
 
 ## Screenshot ##
-<img src="./screenshot/goto-line-preview-demo.gif" width="300" height="341"/>
+<img src="./screenshot/goto-line-preview-demo.gif" width="450" height="510"/>
 
 
 ## Contribution ##
