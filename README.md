@@ -6,7 +6,7 @@
 > Preview line when executing `goto-line` command.
 
 <p align="center">
-  <img src="./screenshot/goto-line-preview-demo.gif" width="450" height="510"/>
+  <img src="./screenshot/goto-line-preview-demo.gif" width="450" height="513"/>
 </p>
 
 Normally `goto-line` will just ask for input of the line number 
