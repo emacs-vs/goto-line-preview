@@ -1,0 +1,12 @@
+# ignore these directories.
+/.git
+/recipes
+/test
+goto-line-preview.el
+
+# ignore generated files.
+*.elc
+
+# ignore I use to not ignore.
+Update_Log.txt
+TODO(jenchieh).txt
