@@ -2,7 +2,7 @@
 /.git
 /recipes
 /test
-goto-line-preview.el
+goto-line-preview-pkg.el
 
 # ignore generated files.
 *.elc
