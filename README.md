@@ -3,8 +3,12 @@
 
 
 # goto-line-preview #
-
 > Preview line when executing `goto-line` command.
+
+Normally `goto-line` will just ask for input of the line number 
+then once you hit `RET`; it will just go to that line of code. 
+This package makes this better by navigating the line while you 
+are inputting in minibuffer.
 
 
 ## Usage ##
