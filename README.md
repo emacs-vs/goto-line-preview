@@ -18,6 +18,11 @@ Inspired by Visual Studio Code goto line preset behavior.
 
 
 ## Usage ##
+Call it from `minibuffer` directly, 
+```
+M-x goto-line-preview-goto-line
+```
+Or you can just bind to any key you want.
 ```el
 (define-key global-map (kbd "M-g") #'goto-line-preview-goto-line)
 ```
