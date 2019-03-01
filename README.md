@@ -4,4 +4,21 @@
 
 # goto-line-preview #
 
-Preview line when executing `goto-line` command.
+> Preview line when executing `goto-line` command.
+
+
+## Usage ##
+```el
+(define-key global-map (kbd "M-g") #'goto-line-preview-goto-line)
+```
+
+
+## Screenshot ##
+<img src="./screenshot/goto-line-preview-demo.png" width="330" height="240"/>
+
+
+## Contribution ##
+If you would like to contribute to this project. You may either
+clone and make pull request to this repository. Or you can
+clone the project and make your own branch of this tool. Any
+methods are welcome!
