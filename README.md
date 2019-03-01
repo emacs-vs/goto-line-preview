@@ -5,20 +5,22 @@
 # goto-line-preview #
 > Preview line when executing `goto-line` command.
 
+<p align="center">
+  <img src="./screenshot/goto-line-preview-demo.gif" width="450" height="510"/>
+</p>
+
 Normally `goto-line` will just ask for input of the line number 
 then once you hit `RET`; it will just go to that line of code. 
 This package makes this better by navigating the line while you 
 are inputting in minibuffer.
+
+Inspired by Visual Studio Code goto line preset behavior.
 
 
 ## Usage ##
 ```el
 (define-key global-map (kbd "M-g") #'goto-line-preview-goto-line)
 ```
-
-
-## Screenshot ##
-<img src="./screenshot/goto-line-preview-demo.gif" width="450" height="510"/>
 
 
 ## Contribution ##
