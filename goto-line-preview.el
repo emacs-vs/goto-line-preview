@@ -1,4 +1,4 @@
-;;; goto-line-preview.el --- Preview line when executing `goto-line` command.                     -*- lexical-binding: t; -*-
+;;; goto-line-preview.el --- Preview line when executing `goto-line` command.    -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2019  Shen, Jen-Chieh
 ;; Created date 2019-03-01 14:53:00
@@ -8,7 +8,7 @@
 ;; Keyword: line navigation
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "25"))
-;; URL: https://github.com/jcs090218/wiki-this
+;; URL: https://github.com/jcs090218/goto-line-preview
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -41,9 +41,6 @@
   :link '(url-link :tag "Repository" "https://github.com/jcs090218/goto-line-preview"))
 
 
-(defvar goto-line-preview-active nil
-  "Flag to check if goto line command active?")
-
 (defvar goto-line-preview-prev-buffer nil
   "Record down the previous buffer before we do `goto-line-preview-goto-line' command.")
 
@@ -55,16 +52,13 @@
   "Do the goto line preview action."
   (save-selected-window
     (when goto-line-preview-prev-buffer
-      (let ((line-num-str "")
-            (line-num -1))
-        (setq line-num-str (thing-at-point 'word))
+      (let ((line-num-str (thing-at-point 'line)))
 
         (switch-to-buffer goto-line-preview-prev-buffer)
 
         (if line-num-str
-            (progn
-              (setq line-num (string-to-number line-num-str))
-              (when (numberp line-num)
+            (let ((line-num (string-to-number line-num-str)))
+              (unless (zerop line-num)
                 (goto-line-preview-do line-num)))
           (goto-line-preview-do goto-line-preview-prev-line-num))))))
 
@@ -79,34 +73,23 @@ LINE-NUM : Target line number to navigate to."
 
 
 ;;;###autoload
-(defun goto-line-preview-internal (line-num)
-  "Preview goto line internal.
-LINE-NUM : Target line number to navigate to."
-  (interactive "nGoto line: "))
-
-;;;###autoload
 (defun goto-line-preview-goto-line ()
   "Preview goto line.
 LINE-NUM : Target line number to navigate to."
   (interactive)
-  (setq goto-line-preview-active t)
-  (setq goto-line-preview-prev-buffer (buffer-name))
-  (setq goto-line-preview-prev-line-num (string-to-number (format-mode-line "%l")))
-  (call-interactively #'goto-line-preview-internal))
+  (let ((goto-line-preview-prev-buffer (buffer-name))
+        (goto-line-preview-prev-line-num (line-number-at-pos)))
+    (read-number "Goto line: ")))
 
 
-(add-hook 'minibuffer-setup-hook
-          (lambda ()
-            (add-hook 'post-command-hook #'goto-line-preview-minibuffer-post-command-hook nil t)))
+(defun goto-line-preview-minibuffer-setup ()
+  "Locally set up preview hooks for this minibuffer command."
+  (when (eq 'goto-line-preview-goto-line this-command)
+    (add-hook 'post-command-hook
+              #'goto-line-preview-do-preview nil t)))
 
-(defun goto-line-preview-minibuffer-post-command-hook ()
-  "Minibuffer post command hook."
-  (when goto-line-preview-active
-    (goto-line-preview-do-preview)))
+(add-hook 'minibuffer-setup-hook 'goto-line-preview-minibuffer-setup)
 
-(add-hook 'minibuffer-exit-hook
-          (lambda ()
-            (setq goto-line-preview-active nil)))
 
 
 (provide 'goto-line-preview)
