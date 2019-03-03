@@ -67,9 +67,8 @@
 LINE-NUM : Target line number to navigate to."
   (save-selected-window
     (switch-to-buffer goto-line-preview-prev-buffer)
-    (with-no-warnings
-      (goto-line line-num))
-    (call-interactively #'recenter)))
+    (goto-char (point-min))
+    (forward-line (1- line-num))))
 
 
 ;;;###autoload
