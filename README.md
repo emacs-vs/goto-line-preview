@@ -21,11 +21,11 @@ P.S. Inspired by [Visual Studio Code](https://code.visualstudio.com/) goto line 
 ## Usage ##
 Call it from `minibuffer` directly, 
 ```
-M-x goto-line-preview-goto-line
+M-x goto-line-preview
 ```
 Or you can just bind to any key you want.
 ```el
-(define-key global-map (kbd "M-g") #'goto-line-preview-goto-line)
+(define-key global-map (kbd "M-g") #'goto-line-preview)
 ```
 
 
