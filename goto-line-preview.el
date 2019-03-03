@@ -73,7 +73,7 @@ LINE-NUM : Target line number to navigate to."
 
 
 ;;;###autoload
-(defun goto-line-preview-goto-line ()
+(defun goto-line-preview ()
   "Preview goto line.
 LINE-NUM : Target line number to navigate to."
   (interactive)
@@ -87,6 +87,8 @@ LINE-NUM : Target line number to navigate to."
       (unless jumped
         (set-window-point window window-point)))))
 
+;;;###autoload
+(define-obsolete-function-alias 'goto-line-preview-goto-line 'goto-line-preview)
 
 (defun goto-line-preview-minibuffer-setup ()
   "Locally set up preview hooks for this minibuffer command."
