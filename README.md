@@ -15,7 +15,7 @@ then once you hit `RET`; it will just go to that line of code.
 This package makes this better by navigating the line while you 
 are inputting in minibuffer.
 
-P.S. Inspired by [Visual Studio Code](https://code.visualstudio.com/) goto line preset behavior.
+*P.S. Inspired by [Visual Studio Code](https://code.visualstudio.com/) goto line preset behavior.*
 
 
 ## Usage ##
