@@ -23,9 +23,9 @@ Call it from `minibuffer` directly,
 ```
 M-x goto-line-preview
 ```
-Or you can just bind to any key you want.
+Or you can bind it globally to replace `goto-line`:
 ```el
-(define-key global-map (kbd "M-g") #'goto-line-preview)
+(global-set-key [remap goto-line] 'goto-line-preview)
 ```
 
 
