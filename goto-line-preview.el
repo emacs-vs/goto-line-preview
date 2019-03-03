@@ -85,7 +85,6 @@ LINE-NUM : Target line number to navigate to."
               (goto-line-preview-prev-line-num (line-number-at-pos)))
           (setq jumped (read-number "Goto line: ")))
       (unless jumped
-        (message "unwind")
         (set-window-point window window-point)))))
 
 
