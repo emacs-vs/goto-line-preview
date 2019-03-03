@@ -77,9 +77,16 @@ LINE-NUM : Target line number to navigate to."
   "Preview goto line.
 LINE-NUM : Target line number to navigate to."
   (interactive)
-  (let ((goto-line-preview-prev-buffer (buffer-name))
-        (goto-line-preview-prev-line-num (line-number-at-pos)))
-    (read-number "Goto line: ")))
+  (let ((window (selected-window))
+        (window-point (window-point))
+        jumped)
+    (unwind-protect
+        (let ((goto-line-preview-prev-buffer (buffer-name))
+              (goto-line-preview-prev-line-num (line-number-at-pos)))
+          (setq jumped (read-number "Goto line: ")))
+      (unless jumped
+        (message "unwind")
+        (set-window-point window window-point)))))
 
 
 (defun goto-line-preview-minibuffer-setup ()
