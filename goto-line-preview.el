@@ -40,6 +40,13 @@
   :group 'tools
   :link '(url-link :tag "Repository" "https://github.com/jcs090218/goto-line-preview"))
 
+(defcustom goto-line-preview-ensure-line-number-mode nil
+  "Optional symbol of a line-number-mode to ensure is enabled for the duration of
+`goto-line-preview'. Modes known to work are `display-line-numbers-mode',
+`linum-mode', and `nlinum-mode'."
+  :group 'goto-line-preview
+  :type 'symbol
+  :options '(display-line-numbers-mode linum-mode nlinum-mode))
 
 (defvar goto-line-preview-prev-buffer nil
   "Record down the previous buffer before we do `goto-line-preview-goto-line' command.")
@@ -70,6 +77,10 @@ LINE-NUM : Target line number to navigate to."
     (goto-char (point-min))
     (forward-line (1- line-num))))
 
+(defun goto-line-preview-line-number-mode-not-showing ()
+  (and goto-line-preview-ensure-line-number-mode
+       (or (not (boundp goto-line-preview-ensure-line-number-mode))
+           (not (symbol-value goto-line-preview-ensure-line-number-mode)))))
 
 ;;;###autoload
 (defun goto-line-preview ()
@@ -78,11 +89,16 @@ LINE-NUM : Target line number to navigate to."
   (interactive)
   (let ((window (selected-window))
         (window-point (window-point))
+        (line-numbers-not-showing (goto-line-preview-line-number-mode-not-showing))
         jumped)
+    (when goto-line-preview-ensure-line-number-mode
+      (funcall goto-line-preview-ensure-line-number-mode 1))
     (unwind-protect
         (let ((goto-line-preview-prev-buffer (buffer-name))
               (goto-line-preview-prev-line-num (line-number-at-pos)))
           (setq jumped (read-number "Goto line: ")))
+      (when (and goto-line-preview-ensure-line-number-mode line-numbers-not-showing)
+        (funcall goto-line-preview-ensure-line-number-mode -1))
       (if jumped
           (call-interactively #'recenter)
         (set-window-point window window-point)))))
