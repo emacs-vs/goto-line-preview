@@ -28,6 +28,17 @@ Or you can bind it globally to replace `goto-line`:
 (global-set-key [remap goto-line] 'goto-line-preview)
 ```
 
+## Optional Variables ##
+
+##### `goto-line-preview-ensure-line-number-mode`  #####
+
+This can be the symbol of a line-number-mode that should always be
+enabled for the duration of `goto-line-preview`. This is useful if you
+are in a buffer that is not showing line numbers but would like to see
+then when you invoke `goto-line-preview`.
+
+Modes known to work are `display-line-numbers-mode`, `linum-mode`,
+and `nlinum-mode`. The default value is `nil`.
 
 ## Contribution ##
 If you would like to contribute to this project, you may either 
