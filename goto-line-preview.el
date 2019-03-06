@@ -83,8 +83,7 @@ LINE-NUM : Target line number to navigate to."
         (let ((goto-line-preview-prev-buffer (buffer-name))
               (goto-line-preview-prev-line-num (line-number-at-pos)))
           (setq jumped (read-number "Goto line: ")))
-      (if jumped
-          (call-interactively #'recenter)
+      (unless jumped
         (set-window-point window window-point)))))
 
 ;;;###autoload
