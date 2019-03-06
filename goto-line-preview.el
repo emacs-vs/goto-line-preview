@@ -47,6 +47,16 @@
 (defvar goto-line-preview-prev-line-num nil
   "Record down the previous line number before we do `goto-line-preview-goto-line' command.")
 
+(defcustom goto-line-preview-before-hook nil
+  "Hooks run before `goto-line-preview' is run."
+  :group 'goto-line-preview
+  :type 'hook)
+
+(defcustom goto-line-preview-after-hook nil
+  "Hooks run after `goto-line-preview' is run."
+  :group 'goto-line-preview
+  :type 'hook)
+
 
 (defun goto-line-preview-do-preview ()
   "Do the goto line preview action."
@@ -79,12 +89,14 @@ LINE-NUM : Target line number to navigate to."
   (let ((window (selected-window))
         (window-point (window-point))
         jumped)
+    (run-hooks 'goto-line-preview-before-hook)
     (unwind-protect
         (let ((goto-line-preview-prev-buffer (buffer-name))
               (goto-line-preview-prev-line-num (line-number-at-pos)))
           (setq jumped (read-number "Goto line: ")))
       (unless jumped
-        (set-window-point window window-point)))))
+        (set-window-point window window-point))
+      (run-hooks 'goto-line-preview-after-hook))))
 
 ;;;###autoload
 (define-obsolete-function-alias 'goto-line-preview-goto-line 'goto-line-preview)
