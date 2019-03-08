@@ -6,7 +6,7 @@
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
 ;; Description: Preview line when executing `goto-line` command.
 ;; Keyword: line navigation
-;; Version: 0.0.3
+;; Version: 0.0.4
 ;; Package-Requires: ((emacs "25"))
 ;; URL: https://github.com/jcs090218/goto-line-preview
 
@@ -41,20 +41,30 @@
   :link '(url-link :tag "Repository" "https://github.com/jcs090218/goto-line-preview"))
 
 
-(defvar goto-line-preview-prev-buffer nil
-  "Record down the previous buffer before we do `goto-line-preview-goto-line' command.")
+(defvar goto-line-preview-prev-window nil
+  "Record down the previous window before we do `goto-line-preview-goto-line' command.")
 
 (defvar goto-line-preview-prev-line-num nil
   "Record down the previous line number before we do `goto-line-preview-goto-line' command.")
+
+(defcustom goto-line-preview-before-hook nil
+  "Hooks run before `goto-line-preview' is run."
+  :group 'goto-line-preview
+  :type 'hook)
+
+(defcustom goto-line-preview-after-hook nil
+  "Hooks run after `goto-line-preview' is run."
+  :group 'goto-line-preview
+  :type 'hook)
 
 
 (defun goto-line-preview-do-preview ()
   "Do the goto line preview action."
   (save-selected-window
-    (when goto-line-preview-prev-buffer
+    (when goto-line-preview-prev-window
       (let ((line-num-str (thing-at-point 'line)))
 
-        (switch-to-buffer goto-line-preview-prev-buffer)
+        (select-window goto-line-preview-prev-window)
 
         (if line-num-str
             (let ((line-num (string-to-number line-num-str)))
@@ -66,7 +76,7 @@
   "Do goto line.
 LINE-NUM : Target line number to navigate to."
   (save-selected-window
-    (switch-to-buffer goto-line-preview-prev-buffer)
+    (select-window goto-line-preview-prev-window)
     (goto-char (point-min))
     (forward-line (1- line-num))))
 
@@ -79,12 +89,14 @@ LINE-NUM : Target line number to navigate to."
   (let ((window (selected-window))
         (window-point (window-point))
         jumped)
+    (run-hooks 'goto-line-preview-before-hook)
     (unwind-protect
-        (let ((goto-line-preview-prev-buffer (buffer-name))
+        (let ((goto-line-preview-prev-window (selected-window))
               (goto-line-preview-prev-line-num (line-number-at-pos)))
           (setq jumped (read-number "Goto line: ")))
       (unless jumped
-        (set-window-point window window-point)))))
+        (set-window-point window window-point))
+      (run-hooks 'goto-line-preview-after-hook))))
 
 ;;;###autoload
 (define-obsolete-function-alias 'goto-line-preview-goto-line 'goto-line-preview)
