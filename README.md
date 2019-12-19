@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.com/jcs090218/goto-line-preview.svg?branch=master)](https://travis-ci.com/jcs090218/goto-line-preview)
 [![MELPA](https://melpa.org/packages/goto-line-preview-badge.svg)](https://melpa.org/#/goto-line-preview)
+[![MELPA Stable](https://stable.melpa.org/packages/goto-line-preview-badge.svg)](https://stable.melpa.org/#/goto-line-preview)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 
