@@ -1,4 +1,4 @@
-;;; goto-line-preview.el --- Preview line when executing `goto-line` command.    -*- lexical-binding: t; -*-
+;;; goto-line-preview.el --- Preview line when executing `goto-line` command    -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2019  Shen, Jen-Chieh
 ;; Created date 2019-03-01 14:53:00
@@ -32,20 +32,12 @@
 
 ;;; Code:
 
-
 (defgroup goto-line-preview nil
   "Preview line when executing `goto-line` command."
   :prefix "goto-line-preview-"
   :group 'convenience
   :group 'tools
   :link '(url-link :tag "Repository" "https://github.com/jcs090218/goto-line-preview"))
-
-
-(defvar goto-line-preview-prev-window nil
-  "Record down the previous window before we do `goto-line-preview-goto-line' command.")
-
-(defvar goto-line-preview-prev-line-num nil
-  "Record down the previous line number before we do `goto-line-preview-goto-line' command.")
 
 (defcustom goto-line-preview-before-hook nil
   "Hooks run before `goto-line-preview' is run."
@@ -57,42 +49,41 @@
   :group 'goto-line-preview
   :type 'hook)
 
+(defvar goto-line-preview--prev-window nil
+  "Record down the previous window before we do `goto-line-preview-goto-line' command.")
 
-(defun goto-line-preview-do-preview ()
+(defvar goto-line-preview--prev-line-num nil
+  "Record down the previous line number before we do `goto-line-preview-goto-line' command.")
+
+(defun goto-line-preview--do-preview ()
   "Do the goto line preview action."
   (save-selected-window
-    (when goto-line-preview-prev-window
+    (when goto-line-preview--prev-window
       (let ((line-num-str (thing-at-point 'line)))
-
-        (select-window goto-line-preview-prev-window)
-
+        (select-window goto-line-preview--prev-window)
         (if line-num-str
             (let ((line-num (string-to-number line-num-str)))
-              (unless (zerop line-num)
-                (goto-line-preview-do line-num)))
-          (goto-line-preview-do goto-line-preview-prev-line-num))))))
+              (unless (zerop line-num) (goto-line-preview--do line-num)))
+          (goto-line-preview--do goto-line-preview--prev-line-num))))))
 
-(defun goto-line-preview-do (line-num)
-  "Do goto line.
-LINE-NUM : Target line number to navigate to."
+(defun goto-line-preview--do (line-num)
+  "Do goto LINE-NUM."
   (save-selected-window
-    (select-window goto-line-preview-prev-window)
+    (select-window goto-line-preview--prev-window)
     (goto-char (point-min))
     (forward-line (1- line-num))))
 
-
 ;;;###autoload
 (defun goto-line-preview ()
-  "Preview goto line.
-LINE-NUM : Target line number to navigate to."
+  "Preview goto line."
   (interactive)
   (let ((window (selected-window))
         (window-point (window-point))
         jumped)
     (run-hooks 'goto-line-preview-before-hook)
     (unwind-protect
-        (let ((goto-line-preview-prev-window (selected-window))
-              (goto-line-preview-prev-line-num (line-number-at-pos)))
+        (let ((goto-line-preview--prev-window (selected-window))
+              (goto-line-preview--prev-line-num (line-number-at-pos)))
           (setq jumped (read-number "Goto line: ")))
       (unless jumped
         (set-window-point window window-point))
@@ -101,15 +92,12 @@ LINE-NUM : Target line number to navigate to."
 ;;;###autoload
 (define-obsolete-function-alias 'goto-line-preview-goto-line 'goto-line-preview)
 
-(defun goto-line-preview-minibuffer-setup ()
+(defun goto-line-preview--minibuffer-setup ()
   "Locally set up preview hooks for this minibuffer command."
   (when (memq this-command '(goto-line-preview goto-line-preview-goto-line))
-    (add-hook 'post-command-hook
-              #'goto-line-preview-do-preview nil t)))
+    (add-hook 'post-command-hook #'goto-line-preview--do-preview nil t)))
 
-(add-hook 'minibuffer-setup-hook 'goto-line-preview-minibuffer-setup)
-
-
+(add-hook 'minibuffer-setup-hook 'goto-line-preview--minibuffer-setup)
 
 (provide 'goto-line-preview)
 ;;; goto-line-preview.el ends here
