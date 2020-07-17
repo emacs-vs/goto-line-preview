@@ -8,7 +8,7 @@
 ;; Keyword: line navigation
 ;; Version: 0.0.5
 ;; Package-Requires: ((emacs "25"))
-;; URL: https://github.com/jcs090218/goto-line-preview
+;; URL: https://github.com/jcs-elp/goto-line-preview
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -37,7 +37,7 @@
   :prefix "goto-line-preview-"
   :group 'convenience
   :group 'tools
-  :link '(url-link :tag "Repository" "https://github.com/jcs090218/goto-line-preview"))
+  :link '(url-link :tag "Repository" "https://github.com/jcs-elp/goto-line-preview"))
 
 (defcustom goto-line-preview-before-hook nil
   "Hooks run before `goto-line-preview' is run."
