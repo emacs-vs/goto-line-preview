@@ -6,7 +6,7 @@
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
 ;; Description: Preview line when executing `goto-line` command.
 ;; Keyword: line navigation
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; Package-Requires: ((emacs "25"))
 ;; URL: https://github.com/jcs-elpa/goto-line-preview
 
