@@ -104,7 +104,7 @@
     (goto-line-preview)))
 
 ;;;###autoload
-(define-obsolete-function-alias 'goto-line-preview-goto-line 'goto-line-preview)
+(define-obsolete-function-alias 'goto-line-preview-goto-line 'goto-line-preview "0.1.1")
 
 (defun goto-line-preview--minibuffer-setup ()
   "Locally set up preview hooks for this minibuffer command."
