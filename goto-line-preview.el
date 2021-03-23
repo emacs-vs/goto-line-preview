@@ -92,7 +92,10 @@
                       (if goto-line-preview--relative-p
                           "Goto line relative: "
                         "Goto line: ")))
-      (unless jumped
+      (if jumped
+          (with-current-buffer (window-buffer goto-line-preview--prev-window)
+            (unless (region-active-p)
+              (push-mark window-point)))
         (set-window-point goto-line-preview--prev-window window-point))
       (run-hooks 'goto-line-preview-after-hook))))
 
