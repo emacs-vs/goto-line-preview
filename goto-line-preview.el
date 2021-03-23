@@ -94,8 +94,7 @@
                         "Goto line: ")))
       (if jumped
           (with-current-buffer (window-buffer goto-line-preview--prev-window)
-            (unless (region-active-p)
-              (push-mark window-point)))
+            (unless (region-active-p) (push-mark window-point)))
         (set-window-point goto-line-preview--prev-window window-point))
       (run-hooks 'goto-line-preview-after-hook))))
 
