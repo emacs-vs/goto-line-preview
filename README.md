@@ -1,10 +1,11 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![MELPA](https://melpa.org/packages/goto-line-preview-badge.svg)](https://melpa.org/#/goto-line-preview)
 [![MELPA Stable](https://stable.melpa.org/packages/goto-line-preview-badge.svg)](https://stable.melpa.org/#/goto-line-preview)
-[![CI](https://github.com/jcs-elpa/goto-line-preview/actions/workflows/test.yml/badge.svg)](https://github.com/jcs-elpa/goto-line-preview/actions/workflows/test.yml)
 
 # goto-line-preview
 > Preview line when executing `goto-line` command.
+
+[![CI](https://github.com/jcs-elpa/goto-line-preview/actions/workflows/test.yml/badge.svg)](https://github.com/jcs-elpa/goto-line-preview/actions/workflows/test.yml)
 
 <p align="center">
   <img src="./etc/goto-line-preview-demo.gif" width="450" height="513"/>
