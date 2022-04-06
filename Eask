@@ -1,4 +1,7 @@
-(package "goto-line-preview" "0.1.1" "Preview line when executing `goto-line` command")
+(package "goto-line-preview"
+         "0.1.1"
+         "Preview line when executing `goto-line` command")
+
 (package-file "goto-line-preview.el")
 
 (source "melpa")
