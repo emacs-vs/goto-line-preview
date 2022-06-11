@@ -5,7 +5,7 @@
 # goto-line-preview
 > Preview line when executing `goto-line` command.
 
-[![CI](https://github.com/jcs-elpa/goto-line-preview/actions/workflows/test.yml/badge.svg)](https://github.com/jcs-elpa/goto-line-preview/actions/workflows/test.yml)
+[![CI](https://github.com/emacs-vs/goto-line-preview/actions/workflows/test.yml/badge.svg)](https://github.com/emacs-vs/goto-line-preview/actions/workflows/test.yml)
 
 <p align="center">
   <img src="./etc/goto-line-preview-demo.gif" width="450" height="513"/>
