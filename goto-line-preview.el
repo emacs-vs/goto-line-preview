@@ -1,6 +1,6 @@
 ;;; goto-line-preview.el --- Preview line when executing `goto-line` command    -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019  Shen, Jen-Chieh
+;; Copyright (C) 2019-2022  Shen, Jen-Chieh
 ;; Created date 2019-03-01 14:53:00
 
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
@@ -8,7 +8,7 @@
 ;; Keyword: line navigation
 ;; Version: 0.1.1
 ;; Package-Requires: ((emacs "25"))
-;; URL: https://github.com/jcs-elpa/goto-line-preview
+;; URL: https://github.com/emacs-vs/goto-line-preview
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -37,7 +37,7 @@
   :prefix "goto-line-preview-"
   :group 'convenience
   :group 'tools
-  :link '(url-link :tag "Repository" "https://github.com/jcs-elpa/goto-line-preview"))
+  :link '(url-link :tag "Repository" "https://github.com/emacs-vs/goto-line-preview"))
 
 (defcustom goto-line-preview-before-hook nil
   "Hooks run before `goto-line-preview' is run."
