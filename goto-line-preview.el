@@ -4,11 +4,10 @@
 ;; Created date 2019-03-01 14:53:00
 
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
-;; Description: Preview line when executing `goto-line` command.
-;; Keyword: line navigation
+;; URL: https://github.com/emacs-vs/goto-line-preview
 ;; Version: 0.1.1
 ;; Package-Requires: ((emacs "25"))
-;; URL: https://github.com/emacs-vs/goto-line-preview
+;; Keywords: line navigation
 
 ;; This file is NOT part of GNU Emacs.
 
