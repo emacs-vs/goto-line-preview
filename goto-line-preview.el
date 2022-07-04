@@ -7,7 +7,7 @@
 ;; URL: https://github.com/emacs-vs/goto-line-preview
 ;; Version: 0.1.1
 ;; Package-Requires: ((emacs "25"))
-;; Keywords: line navigation
+;; Keywords: convenience line navigation
 
 ;; This file is NOT part of GNU Emacs.
 
