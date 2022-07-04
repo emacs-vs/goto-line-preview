@@ -3,7 +3,7 @@
          "Preview line when executing `goto-line` command")
 
 (website-url ""https://github.com/emacs-vs/goto-line-preview)
-(keywords "line" "navigation")
+(keywords "convenience" "line" "navigation")
 
 (package-file "goto-line-preview.el")
 
