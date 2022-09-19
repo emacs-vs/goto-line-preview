@@ -17,7 +17,7 @@ navigating the line while you are inputting in minibuffer.
 
 *P.S. Inspired by [Visual Studio Code](https://code.visualstudio.com/) goto line preset behavior.*
 
-## Usage
+## 🔧 Usage
 
 Call it from `minibuffer` directly, 
 
