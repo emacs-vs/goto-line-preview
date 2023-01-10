@@ -87,9 +87,11 @@
         jumped)
     (run-hooks 'goto-line-preview-before-hook)
     (unwind-protect
-        (setq jumped (read-number (if goto-line-preview--relative-p
-                                      "Goto line relative: "
-                                    "Goto line: ")))
+        (setq jumped (read-number
+		      (let ((lines (count-lines (point-min) (point-max))))
+			   (if goto-line-preview--relative-p
+			       (format "Goto line relative[%d - %d]: " (max 0 (min 1 lines)) lines)
+			     (format "Goto line[%d - %d]: " (max 0 (min 1 lines)) lines)))))
       (if jumped
           (with-current-buffer (window-buffer goto-line-preview--prev-window)
             (unless (region-active-p) (push-mark window-point)))
