@@ -48,6 +48,16 @@
   :group 'goto-line-preview
   :type 'hook)
 
+(defcustom goto-line-preview-hl-duration 1
+  "Duration of highlight when change preview line."
+  :group 'goto-line-preview
+  :type 'integer)
+
+(defcustom goto-line-preview-hl-color "DimGray"
+  "Background color of highlight when change preview line."
+  :group 'goto-line-preview
+  :type 'string)
+
 (defvar goto-line-preview--prev-window nil
   "Record down the previous window before we do preivew display.")
 
@@ -57,12 +67,20 @@
 (defvar goto-line-preview--relative-p nil
   "Flag to see if this command relative.")
 
+(defun goto-line-preview--highlight ()
+  "Keep highlight for a fixed time."
+  (let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
+    (overlay-put overlay 'face `(:background ,goto-line-preview-hl-color))
+    (sit-for goto-line-preview-hl-duration)
+    (delete-overlay overlay)))
+
 (defun goto-line-preview--do (line-num)
   "Do goto LINE-NUM."
   (save-selected-window
     (select-window goto-line-preview--prev-window)
     (goto-char (point-min))
-    (forward-line (1- line-num))))
+    (forward-line (1- line-num))
+    (goto-line-preview--highlight)))
 
 (defun goto-line-preview--do-preview ()
   "Do the goto line preview action."
