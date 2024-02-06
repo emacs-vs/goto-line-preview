@@ -69,10 +69,11 @@
 
 (defun goto-line-preview--highlight ()
   "Keep highlight for a fixed time."
-  (let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
-    (overlay-put overlay 'face `(:background ,goto-line-preview-hl-color))
-    (sit-for goto-line-preview-hl-duration)
-    (delete-overlay overlay)))
+  (if goto-line-preview-hl-duration
+      (let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
+        (overlay-put overlay 'face `(:background ,goto-line-preview-hl-color))
+        (sit-for goto-line-preview-hl-duration)
+        (delete-overlay overlay))))
 
 (defun goto-line-preview--do (line-num)
   "Do goto LINE-NUM."

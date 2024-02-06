@@ -41,7 +41,7 @@ Or you can bind it globally to replace `goto-line`:
 (setq goto-line-preview-hl-color "white")
 ```
 
-If you want to close highlight, set `goto-line-preview-hl-duration` to 0.
+If you want to close highlight, set `goto-line-preview-hl-duration` to 0 or `nil`.
 
 ## 🛠️ Contribute
 
