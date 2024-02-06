@@ -70,62 +70,62 @@
 (defun goto-line-preview--highlight ()
   "Keep highlight for a fixed time."
   (when goto-line-preview-hl-duration
-	(let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
-	  (overlay-put overlay 'face `(:background ,goto-line-preview-hl-color))
-	  (sit-for goto-line-preview-hl-duration)
-	  (delete-overlay overlay))))
+    (let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
+      (overlay-put overlay 'face `(:background ,goto-line-preview-hl-color))
+      (sit-for goto-line-preview-hl-duration)
+      (delete-overlay overlay))))
 
 (defun goto-line-preview--do (line-num)
   "Do goto LINE-NUM."
   (save-selected-window
-	(select-window goto-line-preview--prev-window)
-	(goto-char (point-min))
-	(forward-line (1- line-num))
-	(goto-line-preview--highlight)))
+    (select-window goto-line-preview--prev-window)
+    (goto-char (point-min))
+    (forward-line (1- line-num))
+    (goto-line-preview--highlight)))
 
 (defun goto-line-preview--do-preview ()
   "Do the goto line preview action."
   (save-selected-window
-	(when goto-line-preview--prev-window
-	  (let ((line-num-str (thing-at-point 'line)))
-		(select-window goto-line-preview--prev-window)
-		(if line-num-str
-			(let ((line-num (string-to-number line-num-str)))
-			  (when goto-line-preview--relative-p
-				(setq line-num (+ goto-line-preview--prev-line-num line-num)))
-			  (unless (zerop line-num) (goto-line-preview--do line-num)))
-		  (goto-line-preview--do goto-line-preview--prev-line-num))))))
+    (when goto-line-preview--prev-window
+      (let ((line-num-str (thing-at-point 'line)))
+        (select-window goto-line-preview--prev-window)
+        (if line-num-str
+            (let ((line-num (string-to-number line-num-str)))
+              (when goto-line-preview--relative-p
+                (setq line-num (+ goto-line-preview--prev-line-num line-num)))
+              (unless (zerop line-num) (goto-line-preview--do line-num)))
+          (goto-line-preview--do goto-line-preview--prev-line-num))))))
 
 ;;;###autoload
 (defun goto-line-preview ()
   "Preview goto line."
   (interactive)
   (let ((goto-line-preview--prev-window (selected-window))
-		(window-point (window-point))
-		(goto-line-preview--prev-line-num (line-number-at-pos))
-		jumped)
-	(run-hooks 'goto-line-preview-before-hook)
-	(unwind-protect
-		(setq jumped (read-number
-					  (let ((lines (line-number-at-pos (point-max))))
-						(format (if goto-line-preview--relative-p
-									"[%d] Goto line relative: (%d to %d) "
-								  "[%d] Goto line: (%d to %d) ")
-								goto-line-preview--prev-line-num
-								(max 0 (min 1 lines))
-								lines))))
-	  (if jumped
-		  (with-current-buffer (window-buffer goto-line-preview--prev-window)
-			(unless (region-active-p) (push-mark window-point)))
-		(set-window-point goto-line-preview--prev-window window-point))
-	  (run-hooks 'goto-line-preview-after-hook))))
+        (window-point (window-point))
+        (goto-line-preview--prev-line-num (line-number-at-pos))
+        jumped)
+    (run-hooks 'goto-line-preview-before-hook)
+    (unwind-protect
+        (setq jumped (read-number
+                      (let ((lines (line-number-at-pos (point-max))))
+                        (format (if goto-line-preview--relative-p
+                                    "[%d] Goto line relative: (%d to %d) "
+                                  "[%d] Goto line: (%d to %d) ")
+                                goto-line-preview--prev-line-num
+                                (max 0 (min 1 lines))
+                                lines))))
+      (if jumped
+          (with-current-buffer (window-buffer goto-line-preview--prev-window)
+            (unless (region-active-p) (push-mark window-point)))
+        (set-window-point goto-line-preview--prev-window window-point))
+      (run-hooks 'goto-line-preview-after-hook))))
 
 ;;;###autoload
 (defun goto-line-preview-relative ()
   "Preview goto line relative."
   (interactive)
   (let ((goto-line-preview--relative-p t))
-	(goto-line-preview)))
+    (goto-line-preview)))
 
 ;;;###autoload
 (define-obsolete-function-alias 'goto-line-preview-goto-line 'goto-line-preview "0.1.1")
@@ -133,9 +133,9 @@
 (defun goto-line-preview--minibuffer-setup ()
   "Locally set up preview hooks for this minibuffer command."
   (when (memq this-command '(goto-line-preview
-							 goto-line-preview-goto-line
-							 goto-line-preview-relative))
-	(add-hook 'post-command-hook #'goto-line-preview--do-preview nil t)))
+                             goto-line-preview-goto-line
+                             goto-line-preview-relative))
+    (add-hook 'post-command-hook #'goto-line-preview--do-preview nil t)))
 
 (add-hook 'minibuffer-setup-hook 'goto-line-preview--minibuffer-setup)
 
