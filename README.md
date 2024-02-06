@@ -31,6 +31,18 @@ Or you can bind it globally to replace `goto-line`:
 (global-set-key [remap goto-line] 'goto-line-preview)
 ```
 
+## Change hightlight color or duration
+
+```el
+;; Highlight 1.5 seconds when change preview line
+(setq goto-line-preview-hl-duration 1.5)
+
+;; Change highlight background color to white
+(setq goto-line-preview-hl-color "white")
+```
+
+If you want to close highlight, set `goto-line-preview-hl-duration` to 0 or `nil`.
+
 ## 🛠️ Contribute
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
