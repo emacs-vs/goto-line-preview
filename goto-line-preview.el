@@ -54,7 +54,7 @@
   :type 'integer)
 
 (defface goto-line-preview-hl
-  '((t :inherit highlight))
+  '((t :inherit highlight :extend t))
   "Face to use for highlighting when change preview line."
   :group 'goto-line-preview)
 
@@ -70,8 +70,9 @@
 (defun goto-line-preview--highlight ()
   "Keep highlight for a fixed time."
   (when goto-line-preview-hl-duration
-    (let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
+    (let ((overlay (make-overlay (line-beginning-position) (1+ (line-end-position)))))
       (overlay-put overlay 'face 'goto-line-preview-hl)
+      (overlay-put overlay 'window (selected-window))
       (sit-for goto-line-preview-hl-duration)
       (delete-overlay overlay))))
 
