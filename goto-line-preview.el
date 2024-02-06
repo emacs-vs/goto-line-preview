@@ -53,10 +53,10 @@
   :group 'goto-line-preview
   :type 'integer)
 
-(defcustom goto-line-preview-hl-color "DimGray"
-  "Background color of highlight when change preview line."
-  :group 'goto-line-preview
-  :type 'string)
+(defface goto-line-preview-hl
+  '((t :inherit highlight))
+  "Face to use for highlighting when change preview line."
+  :group 'goto-line-preview)
 
 (defvar goto-line-preview--prev-window nil
   "Record down the previous window before we do preivew display.")
@@ -71,7 +71,7 @@
   "Keep highlight for a fixed time."
   (when goto-line-preview-hl-duration
     (let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
-      (overlay-put overlay 'face `(:background ,goto-line-preview-hl-color))
+      (overlay-put overlay 'face 'goto-line-preview-hl)
       (sit-for goto-line-preview-hl-duration)
       (delete-overlay overlay))))
 
