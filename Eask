@@ -1,3 +1,5 @@
+;; -*- mode: eask; lexical-binding: t -*-
+
 (package "goto-line-preview"
          "0.1.1"
          "Preview line when executing `goto-line` command")
