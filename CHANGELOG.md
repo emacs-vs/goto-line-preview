@@ -8,7 +8,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## 0.2.0 (Unreleased)
 > Released N/A
 
-* Implement highlight a duration when preview line changed (#16)
+* Implement highlight a duration when preview line changed ([#16](../../pull/16))
 
 ## 0.1.0
 > Released Sep 26, 2020
