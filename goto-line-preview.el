@@ -1,6 +1,6 @@
 ;;; goto-line-preview.el --- Preview line when executing `goto-line` command    -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019-2025 Shen, Jen-Chieh
+;; Copyright (C) 2019-2026 Shen, Jen-Chieh
 ;; Created date 2019-03-01 14:53:00
 
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
