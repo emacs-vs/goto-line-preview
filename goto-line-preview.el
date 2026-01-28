@@ -67,6 +67,9 @@
 (defvar goto-line-preview--relative-p nil
   "Flag to see if this command relative.")
 
+(defvar goto-line-preview--executing-p nil
+  "Set to t when the command is getting executed.")
+
 (defun goto-line-preview--highlight ()
   "Keep highlight for a fixed time."
   (when goto-line-preview-hl-duration
@@ -86,8 +89,9 @@
 
 (defun goto-line-preview--do-preview ()
   "Do the goto line preview action."
-  (save-selected-window
-    (when goto-line-preview--prev-window
+  (when (and goto-line-preview--executing-p
+             goto-line-preview--prev-window)
+    (save-selected-window
       (let ((line-num-str (thing-at-point 'line)))
         (select-window goto-line-preview--prev-window)
         (if line-num-str
@@ -101,7 +105,8 @@
 (defun goto-line-preview ()
   "Preview goto line."
   (interactive)
-  (let ((goto-line-preview--prev-window (selected-window))
+  (let ((goto-line-preview--executing-p t)
+        (goto-line-preview--prev-window (selected-window))
         (window-point (window-point))
         (goto-line-preview--prev-line-num (line-number-at-pos))
         jumped)
@@ -133,10 +138,7 @@
 
 (defun goto-line-preview--minibuffer-setup ()
   "Locally set up preview hooks for this minibuffer command."
-  (when (memq this-command '(goto-line-preview
-                             goto-line-preview-goto-line
-                             goto-line-preview-relative))
-    (add-hook 'post-command-hook #'goto-line-preview--do-preview nil t)))
+  (add-hook 'post-command-hook #'goto-line-preview--do-preview nil t))
 
 (add-hook 'minibuffer-setup-hook 'goto-line-preview--minibuffer-setup)
 
