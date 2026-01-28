@@ -9,6 +9,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 > Released N/A
 
 * Implement highlight a duration when preview line changed ([#16](../../pull/16))
+* fix: Don't restrict to command only ([`e11a1e7`](../../commit/e11a1e7bfff5240e44d71d2ff8fae2d5bcbda784))
 
 ## 0.1.0
 > Released Sep 26, 2020
