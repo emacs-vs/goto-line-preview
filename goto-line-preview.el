@@ -70,6 +70,9 @@
 (defvar goto-line-preview--executing-p nil
   "Set to t when the command is getting executed.")
 
+(defvar goto-line-preview--overlays nil
+  "List of overlays to restore that were made visible.")
+
 (defun goto-line-preview--highlight ()
   "Keep highlight for a fixed time."
   (when goto-line-preview-hl-duration
@@ -79,12 +82,32 @@
       (sit-for goto-line-preview-hl-duration)
       (delete-overlay overlay))))
 
+(defun goto-line-preview--make-ovs-at-point-visible ()
+  "Make sure that overlays, making relevant part of the file invisible, are made visible."
+  (mapc (lambda (ov) (push ov goto-line-preview--overlays) (overlay-put ov 'invisible nil))
+        (seq-filter (lambda (ov) (overlay-get ov 'invisible))
+                    (overlays-at (point)))))
+
+(defun goto-line-preview--delete-invisibility-ovs ()
+  "Delete overlays that make this point in the file invisible."
+  (mapc (lambda (ov) (delete-overlay ov))
+        (seq-filter (lambda (ov) (overlay-get ov 'invisible))
+                    (overlays-at (point)))))
+
+(defun goto-line-preview--restore-unrelated-ovs ()
+  "Make all overlays that were made visible, invisible again."
+  (mapc (lambda (ov) (overlay-put ov 'invisible t))
+        goto-line-preview--overlays)
+  (setq goto-line-preview--overlays nil))
+
 (defun goto-line-preview--do (line-num)
   "Do goto LINE-NUM."
   (save-selected-window
     (select-window goto-line-preview--prev-window)
     (goto-char (point-min))
     (forward-line (1- line-num))
+    (when (overlays-at (point))
+      (goto-line-preview--make-ovs-at-point-visible))
     (goto-line-preview--highlight)))
 
 (defun goto-line-preview--do-preview ()
@@ -120,10 +143,13 @@
                                 goto-line-preview--prev-line-num
                                 (max 0 (min 1 lines))
                                 lines))))
+      (goto-line-preview--restore-unrelated-ovs)
       (if jumped
           (with-current-buffer (window-buffer goto-line-preview--prev-window)
             (unless (region-active-p) (push-mark window-point)))
         (set-window-point goto-line-preview--prev-window window-point))
+      (when (overlays-at (point))
+        (goto-line-preview--delete-invisibility-ovs))
       (run-hooks 'goto-line-preview-after-hook))))
 
 ;;;###autoload
