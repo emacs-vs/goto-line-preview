@@ -31,6 +31,8 @@
 
 ;;; Code:
 
+(require 'isearch)
+
 (defgroup goto-line-preview nil
   "Preview line when executing `goto-line` command."
   :prefix "goto-line-preview-"
@@ -73,7 +75,9 @@
 (defun goto-line-preview--highlight ()
   "Keep highlight for a fixed time."
   (when goto-line-preview-hl-duration
-    (let ((overlay (make-overlay (line-beginning-position) (1+ (line-end-position)))))
+    (let* ((beg (line-beginning-position))
+           (end (1+ (line-end-position)))
+           (overlay (make-overlay beg end)))
       (overlay-put overlay 'face 'goto-line-preview-hl)
       (overlay-put overlay 'window (selected-window))
       (sit-for goto-line-preview-hl-duration)
@@ -85,6 +89,10 @@
     (select-window goto-line-preview--prev-window)
     (goto-char (point-min))
     (forward-line (1- line-num))
+    (ignore-errors
+      (let ((search-invisible 'open))
+        (isearch-range-invisible (1+ (line-beginning-position))
+                                 (+ (line-beginning-position) 2))))
     (goto-line-preview--highlight)))
 
 (defun goto-line-preview--do-preview ()
