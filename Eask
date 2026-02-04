@@ -1,7 +1,7 @@
 ;; -*- mode: eask; lexical-binding: t -*-
 
 (package "goto-line-preview"
-         "0.1.1"
+         "0.3.0"
          "Preview line when executing `goto-line` command")
 
 (website-url "https://github.com/emacs-vs/goto-line-preview")
@@ -11,7 +11,8 @@
 
 (script "test" "echo \"Error: no test specified\" && exit 1")
 
-(source "melpa")
+(source 'gnu)
+(source 'melpa)
 
 (depends-on "emacs" "25")
 
